@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D44D3771FCFD99300B8E0FD /* EditDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D44D3761FCFD99300B8E0FD /* EditDataViewController.swift */; };
 		1D48F1C01FCE57610090527C /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D48F1BF1FCE57610090527C /* CollectionViewController.swift */; };
 		1D9FA2621FCCFCEF0066817C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9FA2611FCCFCEF0066817C /* AppDelegate.swift */; };
 		1D9FA2671FCCFCF00066817C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D9FA2651FCCFCF00066817C /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D44D3761FCFD99300B8E0FD /* EditDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDataViewController.swift; sourceTree = "<group>"; };
 		1D48F1BF1FCE57610090527C /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		1D9FA25E1FCCFCEF0066817C /* UserProfileDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserProfileDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D9FA2611FCCFCEF0066817C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 			children = (
 				1D48F1BF1FCE57610090527C /* CollectionViewController.swift */,
 				1DC79C991FCEE9D1008C74BB /* PostMessageViewController.swift */,
+				1D44D3761FCFD99300B8E0FD /* EditDataViewController.swift */,
 			);
 			path = UserControllers;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			files = (
 				1D9FA2621FCCFCEF0066817C /* AppDelegate.swift in Sources */,
 				1D9FFA4A1FCD2877008B3E48 /* UserProfileViewController.swift in Sources */,
+				1D44D3771FCFD99300B8E0FD /* EditDataViewController.swift in Sources */,
 				1DC79C9D1FCEEC14008C74BB /* SwiftPages.swift in Sources */,
 				1D9FA2761FCD00DC0066817C /* RootTabBarController.swift in Sources */,
 				1D9FA2781FCD01DE0066817C /* HomeViewController.swift in Sources */,

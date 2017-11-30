@@ -11,21 +11,22 @@ import SnapKit
 
 
 class UserProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(true)
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
-//        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+         self.navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
+
     }
     
- 
-   
     var tableView: UITableView!
+    var topView: UIImageView!
     let cellID = "UserProfileCell"
     let topViewHeight: CGFloat = 260
-    var topView: UIImageView!
     
     var cellNames = [0: ["我的收藏", "我的发布", "编辑资料"],
                      1: ["通用设置"]
@@ -36,9 +37,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
        setupUI()
-        
     }
     
     func setupUI() {
@@ -65,12 +64,12 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         self.tableView.cellLayoutMarginsFollowReadableWidth = false
         
         //MARK: - headImageView
-        
         self.tableView.contentInset = UIEdgeInsetsMake(topViewHeight, 0, 0, 0)
         self.topView = UIImageView(image: UIImage(named: "1"))
         self.topView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: topViewHeight)
         self.topView.contentMode = .scaleAspectFill
         self.topView.clipsToBounds = true
+        topView.isUserInteractionEnabled = true
         
         // MARK: - 毛玻璃
         let blurEffect = UIBlurEffect(style: .dark)
@@ -78,8 +77,14 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         blurView.frame.size = CGSize(width: view.frame.width, height: view.frame.height)
         self.topView.addSubview(blurView)
         
-        // MARK: - 用户头像 & 昵称
+        // MARK: - 用户头像 & 昵称 & 个性签名
         let userHeadPortrait = UIButton(type: .custom)
+        userHeadPortrait.setImage(UIImage(named: "headPortrait"), for: .normal)
+        userHeadPortrait.layer.masksToBounds = true
+        userHeadPortrait.layer.borderWidth = 4
+        userHeadPortrait.layer.borderColor = UIColor.white.cgColor
+        userHeadPortrait.layer.cornerRadius = 50
+        userHeadPortrait.addTarget(self, action: #selector(userHeadPortraitDidTapped), for: .touchUpInside)
         self.topView.addSubview(userHeadPortrait)
         userHeadPortrait.snp.makeConstraints { (make) in
             make.width.height.equalTo(100)
@@ -87,11 +92,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             make.top.equalTo(50)
             
         }
-        userHeadPortrait.setImage(UIImage(named: "headPortrait"), for: .normal)
-        userHeadPortrait.layer.masksToBounds = true
-        userHeadPortrait.layer.borderWidth = 4
-        userHeadPortrait.layer.borderColor = UIColor.white.cgColor
-        userHeadPortrait.layer.cornerRadius = 50
         
         let nameLabel = UILabel()
         nameLabel.text = "Rick"
@@ -110,7 +110,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         let moodLabel = UILabel()
         moodLabel.textAlignment = .center
         moodLabel.textColor = .white
-        moodLabel.text = "这是一条个性签名\n可以显示两行"
+        moodLabel.text = "编辑个性签名"
         moodLabel.font = UIFont.systemFont(ofSize: 13)
         moodLabel.numberOfLines = 2
         topView.addSubview(moodLabel)
@@ -119,31 +119,25 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             make.width.equalTo(200)
             make.centerX.equalToSuperview()
             make.height.equalTo(40)
-            
         }
         
         
         //MARK: - labelView & 积分、发帖、站龄
         let labelView = UIView()
-//        labelView.backgroundColor = UIColor.blue
         self.topView.addSubview(labelView)
         labelView.snp.makeConstraints { (make) in
             make.height.equalTo(50)
-           
             make.left.equalTo(0)
             make.top.equalTo(270)
             make.bottom.greaterThanOrEqualTo(0)
             make.right.equalTo(0)
         }
        
-        
-        
         let pointLabel = UILabel()
         pointLabel.font = UIFont.systemFont(ofSize: 15)
         pointLabel.numberOfLines = 1
         pointLabel.text = "积分 "
         pointLabel.textColor = UIColor.white
-//        pointLabel.backgroundColor = UIColor.blue
         pointLabel.textAlignment = .center
         labelView.addSubview(pointLabel)
         pointLabel.snp.makeConstraints { (make) in
@@ -151,13 +145,12 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             make.left.equalTo(0)
             make.bottom.equalTo(15)
             make.top.equalTo(10)
-            
         }
+        
         let pointNum = UILabel()
         pointNum.text = "123"
         pointNum.font = UIFont.boldSystemFont(ofSize: 20)
         pointNum.textColor = UIColor.white
-//        point.backgroundColor = UIColor.black
         pointNum.textAlignment = .center
         labelView.addSubview(pointNum)
         pointNum.snp.makeConstraints { (make) in
@@ -165,7 +158,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             make.height.equalTo(30)
             make.left.equalTo(0)
             make.top.equalTo(-10)
-            
         }
         
         let postLabel = UILabel()
@@ -179,7 +171,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             make.left.equalTo(UIScreen.main.bounds.width / 3)
             make.bottom.equalTo(15)
             make.top.equalTo(10)
-            
         }
         
         let postNum = UILabel()
@@ -193,7 +184,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             make.left.equalTo(UIScreen.main.bounds.width / 3)
             make.height.equalTo(30)
             make.top.equalTo(-10)
-            
         }
         
         
@@ -208,7 +198,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             make.left.equalTo(UIScreen.main.bounds.width / 3 * 2)
             make.bottom.equalTo(15)
             make.top.equalTo(10)
-            
         }
         
         let daysNum = UILabel()
@@ -222,8 +211,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             make.left.equalTo(UIScreen.main.bounds.width / 3 * 2)
             make.height.equalTo(30)
             make.top.equalTo(-10)
-            
-            
         }
        
         
@@ -240,7 +227,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             make.left.equalTo(UIScreen.main.bounds.width / 3 - 2.5)
             make.top.lessThanOrEqualTo(-20)
             make.bottom.greaterThanOrEqualTo(0)
-            
         }
         
         let 分隔符1 = UILabel()
@@ -256,7 +242,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             make.left.equalTo(UIScreen.main.bounds.width / 3 * 2 - 2.5)
             make.top.lessThanOrEqualTo(-20)
             make.bottom.greaterThanOrEqualTo(0)
-            
         }
         
         self.tableView.addSubview(topView)
@@ -266,15 +251,16 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     // MARK: - 监听事件
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY: CGFloat = scrollView.contentOffset.y
-        print(offsetY)
         if offsetY < -topViewHeight {
             topView.frame.origin.y = offsetY
             topView.frame.size.height = -offsetY
-            
         }
-
     }
 
+    @objc func userHeadPortraitDidTapped() {
+        self.navigationController?.pushViewController(EditDataViewController(), animated: true)
+        print("111")
+    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
@@ -284,6 +270,10 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             return 20
         }
     }
+}
+
+
+extension UserProfileViewController {
     
     // MARK: - tableviewDataSource
     
@@ -294,33 +284,30 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     func numberOfSections(in tableView: UITableView) -> Int {
         return cellNames.count
     }
-   
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let TextDataInSection = cellNames[indexPath.section]
         let ImageDataInSection = cellImages[indexPath.section]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-        
         cell.accessoryType = .disclosureIndicator
-    
         cell.textLabel?.text = TextDataInSection![indexPath.row]
         cell.imageView?.image = UIImage(named: ImageDataInSection![indexPath.row])
-        
         cell.imageView?.contentMode = .scaleAspectFill
         cell.imageView!.layer.masksToBounds = true
         cell.imageView!.clipsToBounds = true
         
-        // 素材问题 大小不一 == 绘制Pic
-
+        // 素材问题(大小不一) = = 绘制Pic
+        
         if indexPath.section == 0 && indexPath.row == 0 {
             let cellImageSize = CGSize(width: 17,height: 15)
             UIGraphicsBeginImageContextWithOptions(cellImageSize, false, 0)
             cell.imageView?.image?.draw(in: CGRect.init(origin: CGPoint.init(x: -14, y: -13), size: CGSize(width: 45, height: 45)))
             cell.imageView?.image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            
             return cell
+            
         } else {
             
             let cellImageSize = CGSize(width: 17,height: 15)
@@ -329,18 +316,18 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             cell.imageView?.image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
         }
-    
         return cell
-        
     }
+}
+
+
+extension UserProfileViewController {
     
     // MARK: - 点击事件
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
-        
         let backItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         self.navigationItem.backBarButtonItem = backItem
-        
         switch (indexPath.section, indexPath.row) {
         case (0,0):
             self.navigationController?.pushViewController(CollectionViewController(), animated: true)
@@ -348,13 +335,12 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         case (0,1):
             self.navigationController?.pushViewController(PostMessageViewController(), animated: true)
             break
-        case (0,2): break
+        case (0,2):
+            self.navigationController?.pushViewController(EditDataViewController(), animated: true)
+            break
         case (1,0): break
         default:
             return
         }
-        
-        
     }
-
 }

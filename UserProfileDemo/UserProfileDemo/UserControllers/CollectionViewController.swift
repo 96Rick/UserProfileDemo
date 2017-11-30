@@ -31,7 +31,7 @@ class CollectionViewController: UIViewController {
     func setupUI() {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 30)
-        label.textColor = .gray
+        label.textColor = .lightGray
         label.textAlignment = .center
         label.text = "去收藏点东西吧"
         self.view.addSubview(label)
@@ -42,7 +42,7 @@ class CollectionViewController: UIViewController {
         }
         
         let navgationBackgroundLabel = UILabel()
-        navgationBackgroundLabel.backgroundColor = #colorLiteral(red: 0, green: 0.569167614, blue: 0.5746058822, alpha: 1)
+        navgationBackgroundLabel.backgroundColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
         self.view.addSubview(navgationBackgroundLabel)
         navgationBackgroundLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
